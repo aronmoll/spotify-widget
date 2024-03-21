@@ -45,7 +45,7 @@ exports.handler = async (event, context) => {
     }
 
     // Spotify endpoint for fetching recently played tracks
-    const playerEndpoint = `https://api.spotify.com/v1/me/player/recently-played`;
+    const playerEndpoint = `https://api.spotify.com/v1/me/player/currently-playing`;
 
     // Fetch the recently played track
     return fetch(`${playerEndpoint}?limit=1`, {
