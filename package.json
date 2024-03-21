@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.6.0",
+    "gsap": "^3.12.5",
     "node-fetch": "^2.7.0"
   }
 }
