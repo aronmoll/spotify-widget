@@ -1,4 +1,4 @@
 [build]
-    publish = 'src'
-    functions = 'functions'
-
+publish = 'src'
+functions = 'functions'
+command = 'echo "No build step"'
