@@ -1,5 +1,5 @@
 
-import gsap from 'gsap';
+const gsap = require('gsap');
 
 // Flag to keep track of the items' visibility
 let areItemsVisible = false;
