@@ -43,13 +43,3 @@ document.querySelector('.nav-mobile-button').addEventListener('click', function(
   // Toggle the visibility flag
   areItemsVisible = !areItemsVisible;
 });
-
-gsap.to('.scroll-indicator_target', {
-  rotation: 180, // Rotate the target to 180 degrees
-  scrollTrigger: {
-      trigger: document.documentElement, // This uses the entire document as the trigger
-      start: "top top", // Start the animation at the top of the document
-      end: "bottom bottom", // End the animation at the bottom
-      scrub: true // Smooth scrubbing, linking the animation progress to the scroll position
-  }
-});
