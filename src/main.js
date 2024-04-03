@@ -30,6 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // For the Homepage
+    const scrollIndicatorWrap = document.querySelector(".scroll-indicator_wrap");
+const scrollIndicatorTarget = document.querySelector(".scroll-indicator_target");
+
+// GSAP animation
+gsap.to(scrollIndicatorTarget, {
+    rotation: 180,
+    scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true
+    }
+});
+
     function smoothScrollToSection() {
       // Get current rotation using GSAP's getProperty
       const currentRotation = gsap.getProperty(scrollIndicatorTarget, "rotation");
@@ -58,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       }
   }
-  
     // Add click event listener to the scroll indicator wrapper
     scrollIndicatorWrap.addEventListener('click', smoothScrollToSection);   
     gsap.to('.intro-text_wrap', {
