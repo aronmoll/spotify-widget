@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   gsap.to('.intro-text_wrap', {
       scrollTrigger: {
-          trigger: '.projects-wrap',
+          trigger: '.section_projects',
           start: 'top 90%',
           end: 'top 60%',
           scrub: true
