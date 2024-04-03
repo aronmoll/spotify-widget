@@ -30,13 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // For the Homepage
-    gsap.registerPlugin(ScrollTrigger);
-
+    const scrollIndicatorWrap = document.querySelector(".scroll-indicator_wrap");
     const scrollIndicatorTarget = document.querySelector(".scroll-indicator_target");
     
-    // Animation with GSAP
+    // GSAP animation
     gsap.to(scrollIndicatorTarget, {
-        rotation: 180, // Rotation limited to 180 degrees
+        rotation: 180,
         scrollTrigger: {
             trigger: document.body,
             start: "top top",
@@ -45,24 +44,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Function to navigate based on rotation
-    function navigateBasedOnRotation() {
+    // Function to smoothly scroll to the section
+    function smoothScrollToSection() {
         // Get current rotation using GSAP's getProperty
         const currentRotation = gsap.getProperty(scrollIndicatorTarget, "rotation");
         
-        // Check if the rotation is past 90 degrees
-        if(currentRotation > 90) {
-            // If the rotation is more than 90 degrees, navigate to #top
-            window.location.href = '#top';
+        let targetSection;
+        
+        // Determine the target section based on the rotation
+        if (currentRotation > 90) {
+            // If rotation is more than 90 degrees, target the #top section
+            targetSection = document.querySelector("#top");
         } else {
-            // Otherwise, navigate to #Main-content
-            window.location.href = '#Main-content';
+            // Otherwise, target the #Main-content section
+            targetSection = document.querySelector("#Main-content");
+        }
+        
+        // Smooth scroll to the target section
+        if (targetSection) {
+            targetSection.scrollIntoView({
+                behavior: "smooth"
+            });
         }
     }
     
-    // Add click event listener to the scroll indicator target
-    scrollIndicatorTarget.addEventListener('click', navigateBasedOnRotation);
-    
+    // Add click event listener to the scroll indicator wrapper
+    scrollIndicatorWrap.addEventListener('click', smoothScrollToSection);   
     gsap.to('.intro-text_wrap', {
         scrollTrigger: {
             trigger: '.projects-wrap',
