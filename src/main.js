@@ -31,9 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // For the Homepage
     gsap.registerPlugin(ScrollTrigger);
+
     const scrollIndicatorTarget = document.querySelector(".scroll-indicator_target");
+    
+    // Animation with GSAP
     gsap.to(scrollIndicatorTarget, {
-        rotation: 180,
+        rotation: 180, // Rotation limited to 180 degrees
         scrollTrigger: {
             trigger: document.body,
             start: "top top",
@@ -41,6 +44,25 @@ document.addEventListener('DOMContentLoaded', function() {
             scrub: true
         }
     });
+    
+    // Function to navigate based on rotation
+    function navigateBasedOnRotation() {
+        // Get current rotation using GSAP's getProperty
+        const currentRotation = gsap.getProperty(scrollIndicatorTarget, "rotation");
+        
+        // Check if the rotation is past 90 degrees
+        if(currentRotation > 90) {
+            // If the rotation is more than 90 degrees, navigate to #top
+            window.location.href = '#top';
+        } else {
+            // Otherwise, navigate to #Main-content
+            window.location.href = '#Main-content';
+        }
+    }
+    
+    // Add click event listener to the scroll indicator target
+    scrollIndicatorTarget.addEventListener('click', navigateBasedOnRotation);
+    
     gsap.to('.intro-text_wrap', {
         scrollTrigger: {
             trigger: '.projects-wrap',
@@ -53,3 +75,4 @@ document.addEventListener('DOMContentLoaded', function() {
         duration: 0.5
     });
 });
+
