@@ -76,7 +76,7 @@ gsap.to(scrollIndicatorTarget, {
     scrollIndicatorWrap.addEventListener('click', smoothScrollToSection);   
     gsap.to('.intro-text_wrap', {
         scrollTrigger: {
-            trigger: '.Section_projects',
+            trigger: '.section_projects',
             start: 'top 90%',
             end: 'top 60%',
             scrub: true
