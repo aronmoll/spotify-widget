@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 behavior: "smooth"
             });
         }
-    }
-    
+    } 
     // Add click event listener to the scroll indicator wrapper
     scrollIndicatorWrap.addEventListener('click', smoothScrollToSection);   
     gsap.to('.intro-text_wrap', {
