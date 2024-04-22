@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // For elements with the [data-parallax="true"] attribute
-  document.querySelectorAll('[data-parallax="true"] img').forEach(item => {
+  document.querySelectorAll('[data-parallax="true"]').forEach(item => {
     // Initialize the position of each image
     gsap.set(item, { yPercent: -10 });
 
