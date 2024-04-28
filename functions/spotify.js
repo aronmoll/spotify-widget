@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
         // Check the origin of the request
         const origin = event.headers.origin;
         const allowedOrigins = [
-            'https://portfolio-24-4547da-webflow-support.webflow.io',
+            'https://aron-staging.webflow.io/',
             'https://aronmoll.nl'
         ];
         
