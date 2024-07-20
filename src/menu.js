@@ -90,15 +90,28 @@ document.addEventListener('DOMContentLoaded', function () {
             submenuAnimation.kill();
         }
         
-        animateMenuItems('.menu-items .menu-item', { opacity: 0, duration: 0.2, stagger: 0.07 });
-        gsap.to('.single-widget_wrap', { opacity: 0, duration: 0.6, ease: "manvydasEase" });
-
         submenuAnimation = gsap.timeline()
+            .to('.menu-items .menu-item', { 
+                opacity: 0, 
+                duration: 0.2, 
+                stagger: 0.07,
+                ease: "manvydasEase"
+            })
+            .to('.single-widget_wrap', { 
+                opacity: 0, 
+                duration: 0.6, 
+                ease: "manvydasEase"
+            }, "<")
             .set(menuLoader, { display: 'flex' })
             .to(menuLoader, { duration: 1.5 })
             .set(menuLoader, { display: 'none' })
             .set(menuClass, { display: 'flex' })
-            .to(`${menuClass} .menu-item`, { opacity: 1, duration: 0.2, stagger: 0.05, ease: "manvydasEase" });
+            .to(`${menuClass} .menu-item`, { 
+                opacity: 1, 
+                duration: 0.2, 
+                stagger: 0.05, 
+                ease: "manvydasEase" 
+            });
     }
 
     // Contact and settings menu click listeners
