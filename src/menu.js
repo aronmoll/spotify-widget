@@ -113,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Menu main click listener
     document.querySelector('.menu-main').addEventListener('click', () => menuButton.click());
 
+    // Close the menu if clicking outside of .menu-wrapper
+    document.addEventListener('click', (event) => {
+        if (menuOpen && !menuWrapper.contains(event.target) && !menuButton.contains(event.target)) {
+            menuButton.click();
+        }
+    });
+
     // Loader animation
     function createLoader() {
         const target = document.querySelector('.loader-target');
