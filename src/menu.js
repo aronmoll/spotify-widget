@@ -7,6 +7,7 @@ CustomEase.create("manvydasEase", "M0,0 C0.49,0.03 0.13,0.99 1,1");
 document.addEventListener('DOMContentLoaded', function () {
     // Setup a variable to track the toggle state
     let menuOpen = false;
+    let submenuAnimation = null;
 
     // Select elements
     const menuWrapper = document.querySelector('.menu-wrapper');
@@ -49,6 +50,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 from: open ? "start" : "end" 
             } 
         });
+
+        // Reset submenus and loader when opening the menu
+        if (open) {
+            if (submenuAnimation) {
+                submenuAnimation.kill();
+                submenuAnimation = null;
+            }
+            menuLoader.style.display = 'none';
+            contactWrapper.style.display = 'none';
+            document.querySelector('.menu-items.is-settings').style.display = 'none';
+        }
     }
 
     // Add event listener to the menu button
@@ -69,18 +81,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to handle contact or settings menu animation
     function handleSubMenu(menuClass) {
+        if (submenuAnimation) {
+            submenuAnimation.kill();
+        }
+        
         animateMenuItems('.menu-items .menu-item', { opacity: 0, duration: 0.2, stagger: 0.07 });
         gsap.to('.single-widget_wrap', { opacity: 0, duration: 0.6, ease: "manvydasEase" });
 
-        setTimeout(() => {
-            menuLoader.style.display = 'flex';
-            setTimeout(() => {
-                menuLoader.style.display = 'none';
-                const subMenu = document.querySelector(menuClass);
-                subMenu.style.display = 'flex';
-                animateMenuItems(`${menuClass} .menu-item`, { opacity: 1 });
-            }, 1500);
-        }, 200);
+        submenuAnimation = gsap.timeline()
+            .set(menuLoader, { display: 'flex' })
+            .to(menuLoader, { duration: 1.5 })
+            .set(menuLoader, { display: 'none' })
+            .set(menuClass, { display: 'flex' })
+            .to(`${menuClass} .menu-item`, { opacity: 1, duration: 0.2, stagger: 0.05, ease: "manvydasEase" });
     }
 
     // Contact and settings menu click listeners
@@ -102,6 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Return from settings menu
     document.querySelector('.settings-return').addEventListener('click', () => {
+        if (submenuAnimation) {
+            submenuAnimation.kill();
+            submenuAnimation = null;
+        }
         document.querySelector('.menu-items.is-settings').style.display = 'none';
         menuLoader.style.display = 'flex';
         setTimeout(() => {
