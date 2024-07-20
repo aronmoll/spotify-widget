@@ -56,13 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleMenu(!menuOpen);
     });
 
-    // ScrollTrigger for opening and closing the menu
-    ScrollTrigger.create({
-        trigger: ".mvp-spacer",
-        start: "bottom bottom", // When the bottom of `.mvp-spacer` hits the bottom of the viewport
-        onEnter: () => !menuOpen && menuButton.click(), // Trigger the click on `.menu-button` to open the menu
-        onLeaveBack: () => menuOpen && menuButton.click() // Trigger the click on `.menu-button` to close the menu
-    });
+    // Check if the current page is the home page
+    if (window.location.pathname === '/') {
+        // ScrollTrigger for opening and closing the menu
+        ScrollTrigger.create({
+            trigger: ".mvp-spacer",
+            start: "bottom bottom", // When the bottom of `.mvp-spacer` hits the bottom of the viewport
+            onEnter: () => !menuOpen && menuButton.click(), // Trigger the click on `.menu-button` to open the menu
+            onLeaveBack: () => menuOpen && menuButton.click() // Trigger the click on `.menu-button` to close the menu
+        });
+    }
 
     // Function to handle contact or settings menu animation
     function handleSubMenu(menuClass) {
