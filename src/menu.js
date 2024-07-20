@@ -41,7 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
             y: open ? '-102%' : '0%',
             ease: "manvydasEase"
         });
-        animateMenuItems(menuItemChildren, { opacity: open ? 1 : 0, delay: open ? 0.2 : 0, stagger: { amount: 0.05 * (menuItemChildren.length - 1), from: "end" } });
+        animateMenuItems(menuItemChildren, { 
+            opacity: open ? 1 : 0, 
+            delay: open ? 0.2 : 0, 
+            stagger: { 
+                amount: 0.05 * (menuItemChildren.length - 1), 
+                from: open ? "start" : "end" 
+            } 
+        });
     }
 
     // Add event listener to the menu button
