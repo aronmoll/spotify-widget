@@ -68,13 +68,18 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleMenu(!menuOpen);
     });
 
+    // Function to determine if the user is at the bottom of the page
+    function isAtBottom() {
+        return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+    }
+
     // Check if the current page is the home page
     if (window.location.pathname === '/') {
         // ScrollTrigger for opening and closing the menu
         ScrollTrigger.create({
             trigger: ".mvp-spacer",
             start: "bottom bottom", // When the bottom of `.mvp-spacer` hits the bottom of the viewport
-            onEnter: () => !menuOpen && menuButton.click(), // Trigger the click on `.menu-button` to open the menu
+            onEnter: () => !menuOpen && !isAtBottom() && menuButton.click(), // Trigger the click on `.menu-button` to open the menu
             onLeaveBack: () => menuOpen && menuButton.click() // Trigger the click on `.menu-button` to close the menu
         });
     }
