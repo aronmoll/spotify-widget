@@ -48,19 +48,31 @@ function colorModeToggle() {
     return;
   }
 
-  function setColors(colorObject) {
-    Object.keys(colorObject).forEach(function (key) {
-      htmlElement.style.setProperty(key, colorObject[key]);
-    });
+  function setColors(colorObject, animate) {
+    if (typeof gsap !== "undefined" && animate) {
+      const properties = {};
+      Object.keys(colorObject).forEach(key => {
+        properties[key] = colorObject[key];
+      });
+      gsap.to(htmlElement, {
+        css: properties,
+        duration: colorModeDuration,
+        ease: colorModeEase
+      });
+    } else {
+      Object.keys(colorObject).forEach(function (key) {
+        htmlElement.style.setProperty(key, colorObject[key]);
+      });
+    }
   }
 
   function initializeColors() {
     let storagePreference = localStorage.getItem("dark-mode");
-    if (storagePreference === "true") {
-      setColors(darkColors);
+    if (storagePreference === "true" || storagePreference === "alternate-dark") {
+      setColors(darkColors, false);
       htmlElement.classList.add("dark-mode");
     } else {
-      setColors(lightColors);
+      setColors(lightColors, false);
       htmlElement.classList.remove("dark-mode");
     }
   }
@@ -68,12 +80,12 @@ function colorModeToggle() {
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", "true");
-      setColors(darkColors);
+      setColors(darkColors, animate);
       htmlElement.classList.add("dark-mode");
       togglePressed = "true";
     } else {
       localStorage.setItem("dark-mode", "false");
-      setColors(lightColors);
+      setColors(lightColors, animate);
       htmlElement.classList.remove("dark-mode");
       togglePressed = "false";
     }
