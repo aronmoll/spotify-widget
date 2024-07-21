@@ -63,16 +63,25 @@ function colorModeToggle() {
   }
 
   function goDark(dark, animate) {
+    const darkModeToggle = document.querySelector("[dark-mode-toggle]");
+    const darkModeStatusElement = document.querySelector("[dark-mode-status]");
+
     if (dark) {
       localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
       document.body.classList.add(alternate ? "body-alternate-dark" : "body-dark");
       setColors(darkColors, animate);
       togglePressed = "true";
+      darkModeToggle.setAttribute("dark-mode", "enable");
+      darkModeStatusElement.setAttribute("dark-mode-status", "on");
+      darkModeStatusElement.textContent = "On";
     } else {
       localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
       document.body.classList.remove(alternate ? "body-alternate-dark" : "body-dark");
       setColors(lightColors, animate);
       togglePressed = "false";
+      darkModeToggle.setAttribute("dark-mode", "disable");
+      darkModeStatusElement.setAttribute("dark-mode-status", "off");
+      darkModeStatusElement.textContent = "Off";
     }
     if (typeof toggleEl !== "undefined") {
       toggleEl.forEach(function (element) {
