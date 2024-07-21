@@ -62,31 +62,32 @@ function colorModeToggle() {
     }
   }
 
-  function goDark(dark, animate) {
-    const darkModeToggle = document.querySelector("[dark-mode-toggle]");
-    const darkModeStatusElement = document.querySelector("[dark-mode-status]");
+  function updateStatusElements(dark) {
+    const darkModeStatusElement = document.querySelector('[dark-mode-status]');
+    if (darkModeStatusElement) {
+      darkModeStatusElement.setAttribute('dark-mode-status', dark ? 'on' : 'off');
+      darkModeStatusElement.textContent = dark ? 'On' : 'Off';
+    }
+    if (toggleEl) {
+      toggleEl.forEach(function (element) {
+        element.setAttribute('dark-mode', dark ? 'enable' : 'disable');
+      });
+    }
+  }
 
+  function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
       document.body.classList.add(alternate ? "body-alternate-dark" : "body-dark");
       setColors(darkColors, animate);
       togglePressed = "true";
-      darkModeToggle.setAttribute("dark-mode", "enable");
-      darkModeStatusElement.setAttribute("dark-mode-status", "on");
-      darkModeStatusElement.textContent = "On";
+      updateStatusElements(true);
     } else {
       localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
       document.body.classList.remove(alternate ? "body-alternate-dark" : "body-dark");
       setColors(lightColors, animate);
       togglePressed = "false";
-      darkModeToggle.setAttribute("dark-mode", "disable");
-      darkModeStatusElement.setAttribute("dark-mode-status", "off");
-      darkModeStatusElement.textContent = "Off";
-    }
-    if (typeof toggleEl !== "undefined") {
-      toggleEl.forEach(function (element) {
-        element.setAttribute("aria-pressed", togglePressed);
-      });
+      updateStatusElements(false);
     }
   }
 
@@ -105,6 +106,7 @@ function colorModeToggle() {
       element.setAttribute("aria-label", "View Dark Mode");
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
+      element.setAttribute("dark-mode", togglePressed === "true" ? "enable" : "disable");
     });
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
@@ -116,3 +118,4 @@ function colorModeToggle() {
 }
 
 colorModeToggle();
+
