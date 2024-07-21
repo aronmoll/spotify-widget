@@ -65,12 +65,10 @@ function colorModeToggle() {
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
-      document.body.classList.add(alternate ? "body-alternate-dark" : "body-dark");
       setColors(darkColors, animate);
       togglePressed = "true";
     } else {
       localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
-      document.body.classList.remove(alternate ? "body-alternate-dark" : "body-dark");
       setColors(lightColors, animate);
       togglePressed = "false";
     }
@@ -101,7 +99,7 @@ function colorModeToggle() {
     }
   }
 
-  window.addEventListener("DOMContentLoaded", (event) => {
+  document.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[dark-mode-toggle]");
     toggleEl.forEach(function (element) {
       element.setAttribute("aria-label", "View Dark Mode");
@@ -110,7 +108,7 @@ function colorModeToggle() {
     });
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
-        let darkClass = document.body.classList.contains(alternate ? "body-alternate-dark" : "body-dark");
+        let darkClass = localStorage.getItem("dark-mode") === (alternate ? "alternate-dark" : "true");
         darkClass ? goDark(false, true) : goDark(true, true);
       });
     });
