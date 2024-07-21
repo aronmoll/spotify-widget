@@ -21,7 +21,7 @@ function colorModeToggle() {
   }
 
   let colorModeDuration = attr(0.5, scriptTag.getAttribute("duration"));
-  let colorModeEase = attr("power1.out", scriptTag.getAttribute("ease"));
+  let colorModeEase = attr("cubic-bezier(.49, .03, .13, .99)", scriptTag.getAttribute("ease"));
 
   const cssVariables = scriptTag.getAttribute("dark-mode-vars");
   const alternate = scriptTag.getAttribute("alternate") === "true";
