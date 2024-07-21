@@ -49,6 +49,7 @@ function colorModeToggle() {
   }
 
   function setColors(colorObject, animate) {
+    console.log('Setting colors:', colorObject); // Debugging line
     if (typeof gsap !== "undefined" && animate) {
       gsap.to(htmlElement, {
         ...colorObject,
@@ -91,6 +92,7 @@ function colorModeToggle() {
   function loadDarkModeState() {
     let storagePreference = localStorage.getItem("dark-mode");
     if (storagePreference !== null) {
+      console.log('Loaded dark mode state from storage:', storagePreference); // Debugging line
       if (alternate) {
         storagePreference === "alternate-dark" ? goDark(true, false) : goDark(false, false);
       } else {
