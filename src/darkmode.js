@@ -48,38 +48,33 @@ function colorModeToggle() {
     return;
   }
 
-  function setColors(colorObject, animate) {
-    console.log('Setting colors:', colorObject); // Debugging line
-    if (typeof gsap !== "undefined" && animate) {
-      gsap.to(htmlElement, {
-        ...colorObject,
-        duration: colorModeDuration,
-        ease: colorModeEase
-      });
-    } else {
-      Object.keys(colorObject).forEach(function (key) {
-        htmlElement.style.setProperty(key, colorObject[key]);
-      });
-    }
+  function setColors(colorObject) {
+    Object.keys(colorObject).forEach(function (key) {
+      htmlElement.style.setProperty(key, colorObject[key]);
+    });
   }
 
   function initializeColors() {
     let storagePreference = localStorage.getItem("dark-mode");
     if (storagePreference === "true" || storagePreference === "alternate-dark") {
-      setColors(darkColors, false);
+      setColors(darkColors);
+      htmlElement.classList.add("dark-mode");
     } else {
-      setColors(lightColors, false);
+      setColors(lightColors);
+      htmlElement.classList.remove("dark-mode");
     }
   }
 
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
-      setColors(darkColors, animate);
+      setColors(darkColors);
+      htmlElement.classList.add("dark-mode");
       togglePressed = "true";
     } else {
       localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
-      setColors(lightColors, animate);
+      setColors(lightColors);
+      htmlElement.classList.remove("dark-mode");
       togglePressed = "false";
     }
     updateStatusElements(dark);
@@ -112,6 +107,9 @@ function colorModeToggle() {
     }
   }
 
+  // Apply colors immediately to avoid flickering
+  loadDarkModeState();
+
   document.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[dark-mode-toggle]");
     toggleEl.forEach(function (element) {
@@ -121,11 +119,10 @@ function colorModeToggle() {
     });
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
-        let darkClass = localStorage.getItem("dark-mode") === (alternate ? "alternate-dark" : "true");
+        let darkClass = htmlElement.classList.contains("dark-mode");
         darkClass ? goDark(false, true) : goDark(true, true);
       });
     });
-    loadDarkModeState();
   });
 }
 
