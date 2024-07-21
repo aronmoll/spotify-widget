@@ -62,6 +62,21 @@ function colorModeToggle() {
     }
   }
 
+  function goDark(dark, animate) {
+    if (dark) {
+      localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
+      document.body.classList.add(alternate ? "body-alternate-dark" : "body-dark");
+      setColors(darkColors, animate);
+      togglePressed = "true";
+    } else {
+      localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
+      document.body.classList.remove(alternate ? "body-alternate-dark" : "body-dark");
+      setColors(lightColors, animate);
+      togglePressed = "false";
+    }
+    updateStatusElements(dark);
+  }
+
   function updateStatusElements(dark) {
     const darkModeStatusElement = document.querySelector('[dark-mode-status]');
     if (darkModeStatusElement) {
@@ -75,28 +90,14 @@ function colorModeToggle() {
     }
   }
 
-  function goDark(dark, animate) {
-    if (dark) {
-      localStorage.setItem("dark-mode", alternate ? "alternate-dark" : "true");
-      document.body.classList.add(alternate ? "body-alternate-dark" : "body-dark");
-      setColors(darkColors, animate);
-      togglePressed = "true";
-      updateStatusElements(true);
-    } else {
-      localStorage.setItem("dark-mode", alternate ? "alternate-light" : "false");
-      document.body.classList.remove(alternate ? "body-alternate-dark" : "body-dark");
-      setColors(lightColors, animate);
-      togglePressed = "false";
-      updateStatusElements(false);
-    }
-  }
-
-  let storagePreference = localStorage.getItem("dark-mode");
-  if (storagePreference !== null) {
-    if (alternate) {
-      storagePreference === "alternate-dark" ? goDark(true, false) : goDark(false, false);
-    } else {
-      storagePreference === "true" ? goDark(true, false) : goDark(false, false);
+  function loadDarkModeState() {
+    let storagePreference = localStorage.getItem("dark-mode");
+    if (storagePreference !== null) {
+      if (alternate) {
+        storagePreference === "alternate-dark" ? goDark(true, false) : goDark(false, false);
+      } else {
+        storagePreference === "true" ? goDark(true, false) : goDark(false, false);
+      }
     }
   }
 
@@ -106,7 +107,6 @@ function colorModeToggle() {
       element.setAttribute("aria-label", "View Dark Mode");
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
-      element.setAttribute("dark-mode", togglePressed === "true" ? "enable" : "disable");
     });
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
@@ -114,8 +114,8 @@ function colorModeToggle() {
         darkClass ? goDark(false, true) : goDark(true, true);
       });
     });
+    loadDarkModeState();
   });
 }
 
 colorModeToggle();
-
