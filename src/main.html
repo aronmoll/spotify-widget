@@ -1,0 +1,33 @@
+<script>
+
+    const lenis = new Lenis({
+      lerp: 0.1,
+      //infinite: true,
+      wheelMultiplier: 1, 
+    });
+    
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    
+    </script>
+    
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const scrollIndicator = document.querySelector('.scroll-indicator_wrap');
+    const halfwayPoint = (document.documentElement.scrollHeight - window.innerHeight) / 2;
+    
+    ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: (self) => {
+            scrollIndicator.href = self.scroll() < halfwayPoint ? "#Main-content" : "#top";
+        }
+    });
+    
+    </script>
+    
+    
