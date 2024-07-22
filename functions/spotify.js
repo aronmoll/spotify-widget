@@ -52,7 +52,7 @@ exports.handler = async (event, context) => {
         const origin = event.headers.origin;
         const allowedOrigins = [
             'https://aron-staging.webflow.io',
-            'https://aronmoll.nl'
+            'https://www.aronmoll.nl'
         ];
         
         // Set headers to allow CORS if the origin is in the allowed list
