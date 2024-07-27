@@ -1,26 +1,10 @@
 function gridViewToggle() {
-    function attr(defaultVal, attrVal) {
-      const defaultValType = typeof defaultVal;
-      if (typeof attrVal !== "string" || attrVal.trim() === "") return defaultVal;
-      if (attrVal === "true" && defaultValType === "boolean") return true;
-      if (attrVal === "false" && defaultValType === "boolean") return false;
-      if (isNaN(attrVal) && defaultValType === "string") return attrVal;
-      if (!isNaN(attrVal) && defaultValType === "number") return +attrVal;
-      return defaultVal;
-    }
-  
     const htmlElement = document.documentElement;
     let toggleEl;
     let togglePressed = "false";
   
-    const scriptTag = document.querySelector("[grid-view-vars]");
-    if (!scriptTag) {
-      console.warn("Script tag with grid-view-vars attribute not found");
-      return;
-    }
-  
-    let gridViewDuration = attr(0.5, scriptTag.getAttribute("duration"));
-    let gridViewEase = attr("cubic-bezier(.49, .03, .13, .99)", scriptTag.getAttribute("ease"));
+    const gridViewDuration = 0.5;
+    const gridViewEase = "cubic-bezier(.49, .03, .13, .99)";
   
     function toggleView(grid, animate) {
       const elements = document.querySelectorAll(".grid-12_col.pointer-events-none > *");
