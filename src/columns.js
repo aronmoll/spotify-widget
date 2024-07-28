@@ -5,11 +5,15 @@ function gridViewToggle() {
   
     const gridViewDuration = 0.5;
     const gridViewEase = "cubic-bezier(.49, .03, .13, .99)";
+    const expirationTime = 15 * 60 * 1000; // 15 minutes in milliseconds
   
     function toggleView(grid, animate) {
       const elements = document.querySelectorAll(".grid-12_col.pointer-events-none > *");
+      const currentTime = new Date().getTime();
+  
       if (grid) {
         localStorage.setItem("grid-view", "true");
+        localStorage.setItem("grid-view-timestamp", currentTime.toString());
         if (animate) {
           gsap.to(elements, {
             opacity: 1,
@@ -54,10 +58,20 @@ function gridViewToggle() {
     }
   
     function loadGridViewState() {
+      const currentTime = new Date().getTime();
       let storagePreference = localStorage.getItem("grid-view");
-      if (storagePreference !== null) {
-        console.log('Loaded grid view state from storage:', storagePreference); // Debugging line
-        storagePreference === "true" ? toggleView(true, false) : toggleView(false, false);
+      let storageTimestamp = localStorage.getItem("grid-view-timestamp");
+  
+      if (storagePreference !== null && storageTimestamp !== null) {
+        const timeElapsed = currentTime - parseInt(storageTimestamp, 10);
+        if (timeElapsed < expirationTime) {
+          console.log('Loaded grid view state from storage:', storagePreference); // Debugging line
+          storagePreference === "true" ? toggleView(true, false) : toggleView(false, false);
+        } else {
+          localStorage.removeItem("grid-view");
+          localStorage.removeItem("grid-view-timestamp");
+          toggleView(false, false);
+        }
       }
     }
   
