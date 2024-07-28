@@ -15,7 +15,7 @@ function gridViewToggle() {
             opacity: 1,
             duration: gridViewDuration,
             ease: gridViewEase,
-            stagger: 0.1
+            stagger: 0.05
           });
         } else {
           elements.forEach(el => el.style.opacity = 1);
@@ -29,7 +29,7 @@ function gridViewToggle() {
             opacity: 0,
             duration: gridViewDuration,
             ease: gridViewEase,
-            stagger: 0.1
+            stagger: 0.05
           });
         } else {
           elements.forEach(el => el.style.opacity = 0);
