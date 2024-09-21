@@ -153,4 +153,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.onload = createLoader;
+
+    // Add an event listener for the back button to act like the dark mode back button
+    const backButton = document.querySelector('[data-form="menu"]');
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            // Close the contact form or submenu and return to the main menu
+            elements.contactWrapper.style.display = 'none';
+            elements.menuLoader.style.display = 'flex';  // Optionally show a loader
+
+            setTimeout(() => {
+                elements.menuLoader.style.display = 'none';
+                animateMenuItems('.menu-items .menu-item', { opacity: 1 });
+            }, 1500);
+        });
+    }
 });
